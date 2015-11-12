@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+  <name>jcr-tools</name>
+  <displayName>${project.name}</displayName>
+  <description>${project.description}</description>
+  <version>${project.version}</version>
+
+  <components>
+    <id>app-jcr-tools</id>
+    <type-mapping>
+      <type>info.magnolia.jcrtools.JcrToolsSubAppDescriptor</type>
+      <implementation>info.magnolia.jcrtools.ConfiguredJcrToolsSubAppDescriptor</implementation>
+    </type-mapping>
+  </components>
+  <components>
+    <id>app-jcr-tools-query</id>
+    <component>
+      <type>info.magnolia.jcrtools.JcrToolsResultView</type>
+      <implementation>info.magnolia.jcrtools.JcrToolsViewResultImpl</implementation>
+    </component>
+  </components>
+  <components>
+    <id>app-jcr-tools-dumper</id>
+    <component>
+      <type>info.magnolia.jcrtools.JcrToolsResultView</type>
+      <implementation>info.magnolia.jcrtools.JcrToolsViewResultImpl</implementation>
+    </component>
+  </components>
+  <components>
+    <id>app-jcr-tools-exporter</id>
+    <component>
+      <type>info.magnolia.jcrtools.JcrToolsView</type>
+      <implementation>info.magnolia.jcrtools.JcrToolsViewImpl</implementation>
+    </component>
+  </components>
+  <components>
+    <id>app-jcr-tools-importer</id>
+    <component>
+      <type>info.magnolia.jcrtools.JcrToolsView</type>
+      <implementation>info.magnolia.jcrtools.JcrToolsViewImpl</implementation>
+    </component>
+  </components>
+
+  <dependencies>
+    <dependency>
+      <name>ui-framework</name>
+      <version>5.4.2</version>
+    </dependency>
+    <dependency>
+      <name>core</name>
+      <version>5.4.2</version>
+    </dependency>
+  </dependencies>
+</module>
