@@ -86,7 +86,7 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
             final TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
             tempFileStreamResource.setTempFileName(tmpFileName);
             tempFileStreamResource.setTempFileExtension(compression);
-            tempFileStreamResource.getTempFileOutputStream();
+            tempFileOutputStream = tempFileStreamResource.getTempFileOutputStream();
 
             Map<String, Object> params = new HashMap<>();
             params.put(JcrToolsConstants.REPOSITORY, repository);
