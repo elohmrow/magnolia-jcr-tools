@@ -35,13 +35,16 @@ package info.magnolia.jcrtools.importer;
 
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.commands.impl.ImportCommand;
+import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.jcrtools.JcrToolsBaseSubApp;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsView;
 import info.magnolia.ui.api.app.SubAppContext;
+import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.dialog.formdialog.FormBuilder;
 import info.magnolia.ui.form.field.upload.UploadReceiver;
 import info.magnolia.ui.vaadin.form.FormViewReduced;
+import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -57,10 +60,16 @@ import com.vaadin.data.Item;
  * Sub app that reads in an import file from [the export of] a given workspace using {@link UploadReceiver}.
  */
 public class ImporterSubApp extends JcrToolsBaseSubApp {
+    private final UiContext uiContext;
+    private final SimpleTranslator i18n;
+
     @Inject
-    public ImporterSubApp(final SubAppContext subAppContext, final FormViewReduced formView, final JcrToolsView view,
-                          final FormBuilder builder, final CommandsManager commandsManager) {
+    public ImporterSubApp(final SubAppContext subAppContext, final UiContext uiContext, final FormViewReduced formView,
+                          final JcrToolsView view, final FormBuilder builder, final CommandsManager commandsManager,
+                          final SimpleTranslator i18n) {
         super(subAppContext, formView, view, builder, commandsManager);
+        this.uiContext = uiContext;
+        this.i18n = i18n;
     }
 
     @Override
@@ -89,8 +98,10 @@ public class ImporterSubApp extends JcrToolsBaseSubApp {
 
         try {
             commandsManager.executeCommand("import", params);
+            uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.importer.importSuccessMessage"));
         } catch (Exception e) {
             log.error("Failed to execute import command.", e);
+            uiContext.openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.importer.importFailedMessage"));
         } finally {
             IOUtils.closeQuietly(contentAsStream);
         }
