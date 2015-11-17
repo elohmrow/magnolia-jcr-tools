@@ -35,12 +35,15 @@ package info.magnolia.jcrtools.query;
 
 import info.magnolia.cms.util.QueryUtil;
 import info.magnolia.commands.CommandsManager;
+import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.jcrtools.JcrToolsBaseSubApp;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsResultView;
 import info.magnolia.ui.api.app.SubAppContext;
+import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.dialog.formdialog.FormBuilder;
 import info.magnolia.ui.vaadin.form.FormViewReduced;
+import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -53,12 +56,17 @@ import com.vaadin.data.Item;
  */
 public class QuerySubApp extends JcrToolsBaseSubApp {
     private final JcrToolsResultView view;
+    private final SimpleTranslator i18n;
+    private final UiContext uiContext;
 
     @Inject
     public QuerySubApp(final SubAppContext subAppContext, final FormViewReduced formView, final JcrToolsResultView view,
-                       final FormBuilder builder, final CommandsManager commandsManager) {
+                       final FormBuilder builder, final CommandsManager commandsManager, final SimpleTranslator i18n,
+                       final UiContext uiContext) {
         super(subAppContext, formView, view, builder, commandsManager);
         this.view = view;
+        this.i18n = i18n;
+        this.uiContext = uiContext;
     }
 
     @Override
@@ -75,6 +83,7 @@ public class QuerySubApp extends JcrToolsBaseSubApp {
         }
     }
 
+    // throws InvalidQueryException
     private void doQuery(final String workspace, final String statement, final String queryLanguage, final String resultItemType) {
         final long start = System.currentTimeMillis();
 
@@ -93,9 +102,11 @@ public class QuerySubApp extends JcrToolsBaseSubApp {
 
                 count++;
             }
+            uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.query.querySuccessMessage"));
         } catch (Throwable e) {
             final String result = e.getMessage() != null ? e.getMessage() : e.toString();
             log.error(result, e);
+            uiContext.openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.query.queryFailedMessage"));
         }
 
         sb.insert(0, count + " nodes returned in " + (System.currentTimeMillis() - start) + "ms\n");
