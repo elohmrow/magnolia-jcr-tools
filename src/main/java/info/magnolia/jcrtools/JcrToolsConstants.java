@@ -37,7 +37,7 @@ package info.magnolia.jcrtools;
  * Constants for the Jcr Tools apps.
  */
 public class JcrToolsConstants {
-    public static final String WORKSPACE = "repository";
+    public static final String WORKSPACE = "workspace";
     public static final String BASE_PATH = "basePath";
     public static final String FORMAT_XML = "formatXml";
     public static final String LEVEL_STRING = "levelString";
