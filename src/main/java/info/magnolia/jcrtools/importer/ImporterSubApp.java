@@ -77,20 +77,20 @@ public class ImporterSubApp extends JcrToolsBaseSubApp {
         super.onActionTriggered();
         if (formView.isValid()) {
             final Item item = getItem();
-            final String repository = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+            final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
             final String path = item.getItemProperty(JcrToolsConstants.PATH).getValue().toString();
             final UploadReceiver file = (UploadReceiver) item.getItemProperty(JcrToolsConstants.FILE).getValue();
             final String uuids = item.getItemProperty(JcrToolsConstants.UUIDS).getValue().toString();
 
-            doImport(repository, path, file, uuids);
+            doImport(workspace, path, file, uuids);
         }
     }
 
-    private void doImport(final String repository, final String path, final UploadReceiver file, final String uuids) {
+    private void doImport(final String workspace, final String path, final UploadReceiver file, final String uuids) {
         final InputStream contentAsStream = file.getContentAsStream();
 
         Map<String, Object> params = new HashMap<>();
-        params.put(JcrToolsConstants.REPOSITORY, repository);
+        params.put(JcrToolsConstants.WORKSPACE, workspace);
         params.put(JcrToolsConstants.PATH, path);
         params.put(ImportCommand.IMPORT_IDENTIFIER_BEHAVIOR, uuids);
         params.put(ImportCommand.IMPORT_XML_STREAM, contentAsStream);

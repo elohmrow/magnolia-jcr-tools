@@ -215,7 +215,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -572,7 +572,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -986,7 +986,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -1544,7 +1544,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>

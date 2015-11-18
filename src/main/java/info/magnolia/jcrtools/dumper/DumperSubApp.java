@@ -79,7 +79,7 @@ public class DumperSubApp extends JcrToolsBaseSubApp {
         if (formView.isValid()) {
             final Item item = getItem();
             String levelString = item.getItemProperty(JcrToolsConstants.LEVEL_STRING).getValue().toString();
-            String workspace = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+            String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
 
             dump(workspace, Integer.parseInt(levelString));
         }

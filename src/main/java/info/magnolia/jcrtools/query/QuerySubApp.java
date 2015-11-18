@@ -75,7 +75,7 @@ public class QuerySubApp extends JcrToolsBaseSubApp {
         if (formView.isValid()) {
             final Item item = getItem();
             String queryLanguage = item.getItemProperty(JcrToolsConstants.QUERY_LANGUAGE).getValue().toString();
-            String workspace = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+            String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
             String resultItemType = item.getItemProperty(JcrToolsConstants.RESULT_ITEM_TYPE).getValue().toString();
             String statement = item.getItemProperty(JcrToolsConstants.STATEMENT).getValue().toString();
 
@@ -83,7 +83,6 @@ public class QuerySubApp extends JcrToolsBaseSubApp {
         }
     }
 
-    // throws InvalidQueryException
     private void doQuery(final String workspace, final String statement, final String queryLanguage, final String resultItemType) {
         final long start = System.currentTimeMillis();
 

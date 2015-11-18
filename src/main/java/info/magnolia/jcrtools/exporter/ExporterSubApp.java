@@ -84,11 +84,11 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
     }
 
     private void doExport(final Item item) {
-        final String repository = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+        final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
         final String rawBasePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
         final String compression = item.getItemProperty(JcrToolsConstants.COMPRESSION).getValue().toString();
 
-        final String tmpFileName = rawBasePath.equals("/") ? (repository + compression).replace("/", ".") : (repository + rawBasePath + compression).replace("/", ".");
+        final String tmpFileName = rawBasePath.equals("/") ? (workspace + compression).replace("/", ".") : (workspace + rawBasePath + compression).replace("/", ".");
 
         OutputStream tempFileOutputStream = null;
 
@@ -101,7 +101,7 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
             tempFileOutputStream = tempFileStreamResource.getTempFileOutputStream();
 
             Map<String, Object> params = new HashMap<>();
-            params.put(JcrToolsConstants.REPOSITORY, repository);
+            params.put(JcrToolsConstants.WORKSPACE, workspace);
             params.put(JcrToolsConstants.PATH, rawBasePath);
             params.put(ExportCommand.EXPORT_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_FILE_NAME, tmpFileName);
