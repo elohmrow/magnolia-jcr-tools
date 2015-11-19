@@ -1849,6 +1849,7 @@
                         </sv:property>
                         <sv:property sv:name="value" sv:type="String">
                           <sv:value>2</sv:value>
+<<<<<<< HEAD
                         </sv:property>
                       </sv:node>
                       <sv:node sv:name="throw">
@@ -1875,6 +1876,8 @@
                         </sv:property>
                         <sv:property sv:name="value" sv:type="String">
                           <sv:value>3</sv:value>
+=======
+>>>>>>> 0bfab8573ac81d26b202333c2079bfb41ec6aecb
                         </sv:property>
                       </sv:node>
                     </sv:node>
