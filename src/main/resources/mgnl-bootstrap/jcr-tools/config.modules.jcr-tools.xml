@@ -215,7 +215,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -572,7 +572,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -986,7 +986,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -1544,7 +1544,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -1738,7 +1738,7 @@
                         <sv:value>superuser</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                        <sv:value>2015-11-05T11:04:45.578+01:00</sv:value>
+                        <sv:value>2015-11-17T13:31:01.699+01:00</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                         <sv:value>superuser</sv:value>
@@ -1849,6 +1849,35 @@
                         </sv:property>
                         <sv:property sv:name="value" sv:type="String">
                           <sv:value>2</sv:value>
+<<<<<<< HEAD
+                        </sv:property>
+                      </sv:node>
+                      <sv:node sv:name="throw">
+                        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+                          <sv:value>mgnl:contentNode</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:uuid" sv:type="String">
+                          <sv:value>95c7f69e-d961-42e0-8e37-1b82e2478792</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:createdBy" sv:type="String">
+                          <sv:value>admin</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:created" sv:type="Date">
+                          <sv:value>2015-11-17T13:31:01.702+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:createdBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+                          <sv:value>2015-11-17T13:33:13.898+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="value" sv:type="String">
+                          <sv:value>3</sv:value>
+=======
+>>>>>>> 0bfab8573ac81d26b202333c2079bfb41ec6aecb
                         </sv:property>
                       </sv:node>
                     </sv:node>

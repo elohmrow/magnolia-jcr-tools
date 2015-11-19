@@ -35,13 +35,16 @@ package info.magnolia.jcrtools.exporter;
 
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.commands.impl.ExportCommand;
+import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.jcrtools.JcrToolsBaseSubApp;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsView;
 import info.magnolia.ui.api.app.SubAppContext;
+import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.dialog.formdialog.FormBuilder;
 import info.magnolia.ui.framework.util.TempFileStreamResource;
 import info.magnolia.ui.vaadin.form.FormViewReduced;
+import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -58,10 +61,16 @@ import com.vaadin.server.Page;
  * Sub app that creates an export file from a given workspace using {@link ExportCommand}.
  */
 public class ExporterSubApp extends JcrToolsBaseSubApp {
+    private final UiContext uiContext;
+    private final SimpleTranslator i18n;
+
     @Inject
     public ExporterSubApp(final SubAppContext subAppContext, final FormViewReduced formView, final JcrToolsView view,
-                          final FormBuilder builder, final CommandsManager commandsManager) {
+                          final FormBuilder builder, final CommandsManager commandsManager, final UiContext uiContext,
+                          final SimpleTranslator i18n) {
         super(subAppContext, formView, view, builder, commandsManager);
+        this.uiContext = uiContext;
+        this.i18n = i18n;
     }
 
     @Override
@@ -69,27 +78,30 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
         super.onActionTriggered();
         if (formView.isValid()) {
             final Item item = getItem();
-            final String repository = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
-            final String basePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
-            final String compression = item.getItemProperty(JcrToolsConstants.COMPRESSION).getValue().toString();
-            final String formatXml = item.getItemProperty(JcrToolsConstants.FORMAT_XML).getValue().toString();
 
-            doExport(repository, basePath, compression, formatXml);
+            doExport(item);
         }
     }
 
-    private void doExport(final String repository, final String rawBasePath, final String compression, final String formatXml) {
-        final String tmpFileName = rawBasePath.equals("/") ? (repository + compression).replace("/", ".") : (repository + rawBasePath + compression).replace("/", ".");
+    private void doExport(final Item item) {
+        final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
+        final String rawBasePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
+        final String compression = item.getItemProperty(JcrToolsConstants.COMPRESSION).getValue().toString();
+
+        final String tmpFileName = rawBasePath.equals("/") ? (workspace + compression).replace("/", ".") : (workspace + rawBasePath + compression).replace("/", ".");
+
         OutputStream tempFileOutputStream = null;
 
         try {
+            final String formatXml = item.getItemProperty(JcrToolsConstants.FORMAT_XML).getValue().toString();
+
             final TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
             tempFileStreamResource.setTempFileName(tmpFileName);
             tempFileStreamResource.setTempFileExtension(compression);
             tempFileOutputStream = tempFileStreamResource.getTempFileOutputStream();
 
             Map<String, Object> params = new HashMap<>();
-            params.put(JcrToolsConstants.REPOSITORY, repository);
+            params.put(JcrToolsConstants.WORKSPACE, workspace);
             params.put(JcrToolsConstants.PATH, rawBasePath);
             params.put(ExportCommand.EXPORT_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_FILE_NAME, tmpFileName);
@@ -101,8 +113,10 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
 
             // TODO bandersen - open() is deprecated; should instead be a {@link https://vaadin.com/api/com/vaadin/ui/Link.html}. */
             Page.getCurrent().open(tempFileStreamResource, "", false);
+            uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.exporter.exportSuccessMessage"));
         } catch (Exception e) {
             log.error("Failed to execute export command", e);
+            uiContext.openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.exporter.exportFailedMessage"));
         } finally {
             IOUtils.closeQuietly(tempFileOutputStream);
         }
