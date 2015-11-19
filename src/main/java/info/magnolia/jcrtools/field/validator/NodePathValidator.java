@@ -70,9 +70,9 @@ public class NodePathValidator extends AbstractStringValidator {
 
     private boolean nodeExists(final String basePath) {
         try {
-            final String repository = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+            final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
 
-            Session session = context.getJCRSession(repository);
+            Session session = context.getJCRSession(workspace);
             return session.nodeExists(basePath);
 
         } catch (RepositoryException e) {

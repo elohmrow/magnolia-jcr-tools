@@ -36,12 +36,15 @@ package info.magnolia.jcrtools.dumper;
 import info.magnolia.cms.util.DumperUtil;
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.context.Context;
+import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.jcrtools.JcrToolsBaseSubApp;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsResultView;
 import info.magnolia.ui.api.app.SubAppContext;
+import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.dialog.formdialog.FormBuilder;
 import info.magnolia.ui.vaadin.form.FormViewReduced;
+import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -56,13 +59,18 @@ import com.vaadin.data.Item;
 public class DumperSubApp extends JcrToolsBaseSubApp {
     private final Context context;
     private final JcrToolsResultView view;
+    private final SimpleTranslator i18n;
+    private final UiContext uiContext;
 
     @Inject
     public DumperSubApp(final SubAppContext subAppContext, final FormViewReduced formView, final JcrToolsResultView view,
-                        final FormBuilder builder, final CommandsManager commandsManager, final Context context) {
+                        final FormBuilder builder, final CommandsManager commandsManager, final Context context,
+                        final UiContext uiContext, final SimpleTranslator i18n) {
         super(subAppContext, formView, view, builder, commandsManager);
         this.context = context;
         this.view = view;
+        this.i18n = i18n;
+        this.uiContext = uiContext;
     }
 
     @Override
@@ -71,7 +79,7 @@ public class DumperSubApp extends JcrToolsBaseSubApp {
         if (formView.isValid()) {
             final Item item = getItem();
             String levelString = item.getItemProperty(JcrToolsConstants.LEVEL_STRING).getValue().toString();
-            String workspace = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+            String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
 
             dump(workspace, Integer.parseInt(levelString));
         }
@@ -86,8 +94,10 @@ public class DumperSubApp extends JcrToolsBaseSubApp {
 
             String nodes = DumperUtil.dump(rootSession, level);
             view.setResult(nodes);
+            uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.dumper.dumpSuccessMessage"));
         } catch (RepositoryException re) {
             log.error("Could not create dump for workspace '{}'.", workspace, re);
+            uiContext.openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.dumper.dumpFailedMessage"));
         }
     }
 }

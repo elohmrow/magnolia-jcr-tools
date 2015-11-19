@@ -35,13 +35,16 @@ package info.magnolia.jcrtools.importer;
 
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.commands.impl.ImportCommand;
+import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.jcrtools.JcrToolsBaseSubApp;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsView;
 import info.magnolia.ui.api.app.SubAppContext;
+import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.dialog.formdialog.FormBuilder;
 import info.magnolia.ui.form.field.upload.UploadReceiver;
 import info.magnolia.ui.vaadin.form.FormViewReduced;
+import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -57,10 +60,16 @@ import com.vaadin.data.Item;
  * Sub app that reads in an import file from [the export of] a given workspace using {@link UploadReceiver}.
  */
 public class ImporterSubApp extends JcrToolsBaseSubApp {
+    private final UiContext uiContext;
+    private final SimpleTranslator i18n;
+
     @Inject
-    public ImporterSubApp(final SubAppContext subAppContext, final FormViewReduced formView, final JcrToolsView view,
-                          final FormBuilder builder, final CommandsManager commandsManager) {
+    public ImporterSubApp(final SubAppContext subAppContext, final UiContext uiContext, final FormViewReduced formView,
+                          final JcrToolsView view, final FormBuilder builder, final CommandsManager commandsManager,
+                          final SimpleTranslator i18n) {
         super(subAppContext, formView, view, builder, commandsManager);
+        this.uiContext = uiContext;
+        this.i18n = i18n;
     }
 
     @Override
@@ -68,29 +77,31 @@ public class ImporterSubApp extends JcrToolsBaseSubApp {
         super.onActionTriggered();
         if (formView.isValid()) {
             final Item item = getItem();
-            final String repository = item.getItemProperty(JcrToolsConstants.REPOSITORY).getValue().toString();
+            final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
             final String path = item.getItemProperty(JcrToolsConstants.PATH).getValue().toString();
             final UploadReceiver file = (UploadReceiver) item.getItemProperty(JcrToolsConstants.FILE).getValue();
-            final String uuids = item.getItemProperty(JcrToolsConstants.UUIDS).getValue().toString();
+            final String behavior = item.getItemProperty(JcrToolsConstants.BEHAVIOR).getValue().toString();
 
-            doImport(repository, path, file, uuids);
+            doImport(workspace, path, file, behavior);
         }
     }
 
-    private void doImport(final String repository, final String path, final UploadReceiver file, final String uuids) {
+    private void doImport(final String workspace, final String path, final UploadReceiver file, final String behavior) {
         final InputStream contentAsStream = file.getContentAsStream();
 
         Map<String, Object> params = new HashMap<>();
-        params.put(JcrToolsConstants.REPOSITORY, repository);
-        params.put(JcrToolsConstants.PATH, path);
-        params.put(ImportCommand.IMPORT_IDENTIFIER_BEHAVIOR, uuids);
+        params.put("repository", workspace);
+        params.put("path", path);
+        params.put(ImportCommand.IMPORT_IDENTIFIER_BEHAVIOR, behavior);
         params.put(ImportCommand.IMPORT_XML_STREAM, contentAsStream);
         params.put(ImportCommand.IMPORT_XML_FILE_NAME, file.getFileName());
 
         try {
             commandsManager.executeCommand("import", params);
+            uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.importer.importSuccessMessage"));
         } catch (Exception e) {
             log.error("Failed to execute import command.", e);
+            uiContext.openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.importer.importFailedMessage"));
         } finally {
             IOUtils.closeQuietly(contentAsStream);
         }

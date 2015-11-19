@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="jcr-tools" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="jcr-tools" xmlns:sv="http://www.jcp.org/jcr/sv/1.0">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:content</sv:value>
   </sv:property>
@@ -16,7 +16,7 @@
     <sv:value>superuser</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-    <sv:value>2015-11-03T11:10:20.204+01:00</sv:value>
+    <sv:value>2015-11-18T15:25:36.891+01:00</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
     <sv:value>superuser</sv:value>
@@ -215,7 +215,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -458,7 +458,7 @@
             <sv:value>superuser</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-            <sv:value>2015-11-11T17:55:21.472+01:00</sv:value>
+            <sv:value>2015-11-12T15:33:22.115+01:00</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
             <sv:value>superuser</sv:value>
@@ -572,7 +572,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -986,7 +986,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -1082,7 +1082,7 @@
                           <sv:value>info.magnolia.jcrtools.field.validator.NodePathValidatorDefinition</sv:value>
                         </sv:property>
                         <sv:property sv:name="errorMessage" sv:type="String">
-                          <sv:value>That Base Path does not exist.  Please try again.</sv:value>
+                          <sv:value>That Base Path does not exist. Please try again.</sv:value>
                         </sv:property>
                         <sv:property sv:name="jcr:createdBy" sv:type="String">
                           <sv:value>admin</sv:value>
@@ -1544,7 +1544,7 @@
                   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                     <sv:value>superuser</sv:value>
                   </sv:property>
-                  <sv:node sv:name="repository">
+                  <sv:node sv:name="workspace">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -1649,7 +1649,7 @@
                           <sv:value>info.magnolia.jcrtools.field.validator.NodePathValidatorDefinition</sv:value>
                         </sv:property>
                         <sv:property sv:name="errorMessage" sv:type="String">
-                          <sv:value>That Base Path does not exist.  Please try again.</sv:value>
+                          <sv:value>That Base Path does not exist. Please try again.</sv:value>
                         </sv:property>
                         <sv:property sv:name="jcr:createdBy" sv:type="String">
                           <sv:value>admin</sv:value>
@@ -1678,7 +1678,7 @@
                       </sv:node>
                     </sv:node>
                   </sv:node>
-                  <sv:node sv:name="uuids">
+                  <sv:node sv:name="behavior">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
@@ -1738,7 +1738,7 @@
                         <sv:value>superuser</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                        <sv:value>2015-11-05T11:04:45.578+01:00</sv:value>
+                        <sv:value>2015-11-17T13:31:01.699+01:00</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                         <sv:value>superuser</sv:value>
@@ -1769,7 +1769,7 @@
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                          <sv:value>2015-11-05T11:04:45.578+01:00</sv:value>
+                          <sv:value>2015-11-17T11:02:57.341+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                           <sv:value>superuser</sv:value>
@@ -1778,7 +1778,7 @@
                           <sv:value>true</sv:value>
                         </sv:property>
                         <sv:property sv:name="value" sv:type="String">
-                          <sv:value>new</sv:value>
+                          <sv:value>0</sv:value>
                         </sv:property>
                       </sv:node>
                       <sv:node sv:name="remove">
@@ -1807,13 +1807,13 @@
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                          <sv:value>2015-11-05T11:04:45.578+01:00</sv:value>
+                          <sv:value>2015-11-17T11:03:04.725+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="value" sv:type="String">
-                          <sv:value>remove</sv:value>
+                          <sv:value>1</sv:value>
                         </sv:property>
                       </sv:node>
                       <sv:node sv:name="replace">
@@ -1842,13 +1842,39 @@
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                          <sv:value>2015-11-05T11:04:45.578+01:00</sv:value>
+                          <sv:value>2015-11-17T11:03:13.623+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="value" sv:type="String">
-                          <sv:value>replace</sv:value>
+                          <sv:value>2</sv:value>
+                        </sv:property>
+                      </sv:node>
+                      <sv:node sv:name="throw">
+                        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+                          <sv:value>mgnl:contentNode</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:uuid" sv:type="String">
+                          <sv:value>95c7f69e-d961-42e0-8e37-1b82e2478792</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:createdBy" sv:type="String">
+                          <sv:value>admin</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:created" sv:type="Date">
+                          <sv:value>2015-11-17T13:31:01.702+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:createdBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+                          <sv:value>2015-11-17T13:33:13.898+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="value" sv:type="String">
+                          <sv:value>3</sv:value>
                         </sv:property>
                       </sv:node>
                     </sv:node>
