@@ -7,14 +7,14 @@
     <artifactId>magnolia-parent-pom-community</artifactId>
     <version>31</version>
   </parent>
-  
+
   <groupId>info.magnolia.jcrtools</groupId>
   <artifactId>magnolia-jcr-tools</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Magnolia JCR Tools</name>
-  <description>Magnolia JCR Queries and Import/Export Apps</description> 
-  
+  <description>Magnolia JCR Queries and Import/Export Apps</description>
+
   <properties>
     <magnoliaVersion>5.4.2</magnoliaVersion>
     <javaVersion>1.7</javaVersion>
@@ -50,6 +50,19 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-core</artifactId>
+      <type>test-jar</type>
+      <version>5.4.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>1.10.8</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
