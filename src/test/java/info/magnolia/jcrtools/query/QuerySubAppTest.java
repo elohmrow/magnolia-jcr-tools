@@ -31,8 +31,10 @@
  * intact.
  *
  */
-package info.magnolia.jcrtools.dumper;
+package info.magnolia.jcrtools.query;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.commands.CommandsManager;
@@ -59,20 +61,25 @@ import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 import javax.jcr.Node;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.ObjectProperty;
 
 /**
- * Tests for the {@link DumperSubApp}.
+ * Tests for the {@link QuerySubApp}.
  */
-public class DumperSubAppTest {
+public class QuerySubAppTest {
     private static final String workspace = "workspace";
-    private static final String level = "2";
     private static final String path = "path";
+    private static final String queryLanguage = "JCR-SQL2";
+    private static final String resultItemType = "nt:base";
+    private static final String primaryNodeTypeName = "mgnl:content";
+    private static final String statement = "select * from [" + primaryNodeTypeName + "]";
+    private static final String successMessage = "1 nodes returned in";
 
     private final FormViewReduced formView = mock(FormViewReduced.class);
-    private final JcrToolsResultView view = mock(JcrToolsResultView.class);
+    private JcrToolsResultView view = mock(JcrToolsResultView.class);
     private final CommandsManager commandsManager = mock(CommandsManager.class);
     private final UiContext uiContext = mock(UiContext.class);
     private final SimpleTranslator i18n = mock(SimpleTranslator.class);
@@ -87,12 +94,12 @@ public class DumperSubAppTest {
     private final ConfiguredJcrToolsSubAppDescriptor subAppDescriptor = new ConfiguredJcrToolsSubAppDescriptor();
     private final FormDefinition formDefinition = new ConfiguredFormDefinition();
 
-    private DumperSubApp dumperSubApp;
+    private QuerySubApp querySubApp;
     private SubAppContext subAppContext;
     private FormBuilder builder;
 
     @Test
-    public void testDumperSubApp() throws Exception {
+    public void testQuerySubApp() throws Exception {
         doReturn(true).when(formView).isValid();
 
         builder = new FormBuilder(fieldFactoryFactory, defaultI18NAuthoringSupport, uiContext, componentProvider);
@@ -103,20 +110,24 @@ public class DumperSubAppTest {
         context.addSession(workspace, session);
         MgnlContext.setInstance(context);
 
-        dumperSubApp = new DumperSubApp(subAppContext, formView, view, builder, commandsManager, context, uiContext, i18n);
-        dumperSubApp.start(location);
+        querySubApp = new QuerySubApp(subAppContext, formView, view, builder, commandsManager, i18n, uiContext);
+        querySubApp.start(location);
 
-        final Node node = session.getRootNode().addNode(path);
+        final Node node = session.getRootNode().addNode(path, primaryNodeTypeName);
 
-        final Item item = dumperSubApp.getItem();
-        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(level));
+        final Item item = querySubApp.getItem();
         item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>(workspace));
+        item.addItemProperty(JcrToolsConstants.QUERY_LANGUAGE, new ObjectProperty<>(queryLanguage));
+        item.addItemProperty(JcrToolsConstants.RESULT_ITEM_TYPE, new ObjectProperty<>(resultItemType));
+        item.addItemProperty(JcrToolsConstants.STATEMENT, new ObjectProperty<>(statement));
         item.addItemProperty(node, new ObjectProperty(node));
 
-        dumperSubApp.onActionTriggered();
+        querySubApp.onActionTriggered();
 
-        verify(view).setResult("/\n/" + path + "\n");
-        verify(uiContext).openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.dumper.dumpSuccessMessage"));
-        verify(uiContext, never()).openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.dumper.dumpFailedMessage"));
+        ArgumentCaptor<String> resultView = ArgumentCaptor.forClass(String.class);
+        verify(view).setResult(resultView.capture());
+        assertThat(resultView.getValue(), containsString(successMessage));
+        verify(uiContext).openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.query.querySuccessMessage"));
+        verify(uiContext, never()).openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.query.queryFailedMessage"));
     }
 }

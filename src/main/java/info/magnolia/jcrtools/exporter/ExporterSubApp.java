@@ -94,14 +94,14 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
 
         try {
             final String formatXml = item.getItemProperty(JcrToolsConstants.FORMAT_XML).getValue().toString();
-            final TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
+            TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
             tempFileStreamResource.setTempFileName(tmpFileName);
             tempFileStreamResource.setTempFileExtension(compression);
             tempFileOutputStream = tempFileStreamResource.getTempFileOutputStream();
 
             Map<String, Object> params = new HashMap<>();
-            params.put(JcrToolsConstants.WORKSPACE, workspace);
-            params.put(JcrToolsConstants.PATH, rawBasePath);
+            params.put("repository", workspace);
+            params.put("path", rawBasePath);
             params.put(ExportCommand.EXPORT_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_FILE_NAME, tmpFileName);
             params.put(ExportCommand.EXPORT_FORMAT, formatXml);
