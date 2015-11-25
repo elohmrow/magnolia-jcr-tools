@@ -90,14 +90,14 @@ public class ImporterSubApp extends JcrToolsBaseSubApp {
         final InputStream contentAsStream = file.getContentAsStream();
 
         Map<String, Object> params = new HashMap<>();
-        params.put("repository", workspace);
-        params.put("path", path);
+        params.put(JcrToolsConstants.REPOSITORY, workspace);
+        params.put(JcrToolsConstants.PATH, path);
         params.put(ImportCommand.IMPORT_IDENTIFIER_BEHAVIOR, behavior);
         params.put(ImportCommand.IMPORT_XML_STREAM, contentAsStream);
         params.put(ImportCommand.IMPORT_XML_FILE_NAME, file.getFileName());
 
         try {
-            commandsManager.executeCommand("import", params);
+            commandsManager.executeCommand(JcrToolsConstants.IMPORT_COMMAND, params);
             uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.importer.importSuccessMessage"));
         } catch (Exception e) {
             log.error("Failed to execute import command.", e);

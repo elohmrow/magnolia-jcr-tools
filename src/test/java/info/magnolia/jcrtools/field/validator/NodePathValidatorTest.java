@@ -42,31 +42,42 @@ import info.magnolia.ui.vaadin.integration.jcr.JcrNodeAdapter;
 import javax.jcr.Node;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.vaadin.data.util.ObjectProperty;
 
-/**
- * Tests for the {@link NodePathValidator}.
- */
 public class NodePathValidatorTest {
-    public static final String workspace = "workspace";
-    public static final String path = "path";
-    public static final String propertyName = "propertyName";
-    public static final String propertyValue = "propertyValue";
+    private static final String workspace = "workspace";
+    private static final String path = "path";
+    private static final String propertyName = "propertyName";
+    private static final String propertyValue = "propertyValue";
 
-    @Test
-    public void testNodePathValidator() throws Exception {
-        final MockSession session = new MockSession(workspace);
-        final MockContext context = new MockContext();
+    private MockSession session;
+    private MockContext context;
+    private Node node;
+    private JcrNodeAdapter item;
+
+    @Before
+    public void setUp() throws Exception {
+        // GIVEN
+        session = new MockSession(workspace);
+        context = new MockContext();
         context.addSession(workspace, session);
         MgnlContext.setInstance(context);
 
-        final Node node = session.getRootNode().addNode(path);
-        final JcrNodeAdapter item = new JcrNodeAdapter(node);
+        node = session.getRootNode().addNode(path);
+        item = new JcrNodeAdapter(node);
+    }
+
+    @Test
+    public void testNodePathValidator() throws Exception {
+        // WHEN
         item.addItemProperty(propertyName, new ObjectProperty<>(propertyValue));
         item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>(workspace));
         final NodePathValidator nodePathValidator = new NodePathValidator(item, context, "");
+
+        // THEN
         Assert.assertTrue(nodePathValidator.isValid(node.getPath()));  // should be true
         Assert.assertFalse(nodePathValidator.isValid("/fakePath"));    // should be false
     }

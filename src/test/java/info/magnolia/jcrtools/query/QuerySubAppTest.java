@@ -60,15 +60,13 @@ import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import javax.jcr.Node;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.ObjectProperty;
 
-/**
- * Tests for the {@link QuerySubApp}.
- */
 public class QuerySubAppTest {
     private static final String workspace = "workspace";
     private static final String path = "path";
@@ -78,18 +76,18 @@ public class QuerySubAppTest {
     private static final String statement = "select * from [" + primaryNodeTypeName + "]";
     private static final String successMessage = "1 nodes returned in";
 
-    private final FormViewReduced formView = mock(FormViewReduced.class);
-    private JcrToolsResultView view = mock(JcrToolsResultView.class);
-    private final CommandsManager commandsManager = mock(CommandsManager.class);
-    private final UiContext uiContext = mock(UiContext.class);
-    private final SimpleTranslator i18n = mock(SimpleTranslator.class);
-    private final FieldFactoryFactory fieldFactoryFactory = mock(FieldFactoryFactory.class);
-    private final DefaultI18NAuthoringSupport defaultI18NAuthoringSupport = mock(DefaultI18NAuthoringSupport.class);
-    private final ComponentProvider componentProvider = mock(ComponentProvider.class);
-    private final Location location = mock(Location.class);
+    private FormViewReduced formView;
+    private JcrToolsResultView view;
+    private CommandsManager commandsManager;
+    private UiContext uiContext;
+    private SimpleTranslator i18n;
+    private FieldFactoryFactory fieldFactoryFactory;
+    private DefaultI18NAuthoringSupport defaultI18NAuthoringSupport;
+    private ComponentProvider componentProvider;
+    private Location location;
 
-    private final MockSession session = new MockSession(workspace);
-    private final MockContext context = new MockContext();
+    private MockSession session;
+    private MockContext context;
 
     private final ConfiguredJcrToolsSubAppDescriptor subAppDescriptor = new ConfiguredJcrToolsSubAppDescriptor();
     private final FormDefinition formDefinition = new ConfiguredFormDefinition();
@@ -98,8 +96,22 @@ public class QuerySubAppTest {
     private SubAppContext subAppContext;
     private FormBuilder builder;
 
-    @Test
-    public void testQuerySubApp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
+        // GIVEN
+        formView = mock(FormViewReduced.class);
+        view = mock(JcrToolsResultView.class);
+        commandsManager = mock(CommandsManager.class);
+        uiContext = mock(UiContext.class);
+        i18n = mock(SimpleTranslator.class);
+        fieldFactoryFactory = mock(FieldFactoryFactory.class);
+        defaultI18NAuthoringSupport = mock(DefaultI18NAuthoringSupport.class);
+        componentProvider = mock(ComponentProvider.class);
+        location = mock(Location.class);
+
+        session = new MockSession(workspace);
+        context = new MockContext();
+
         doReturn(true).when(formView).isValid();
 
         builder = new FormBuilder(fieldFactoryFactory, defaultI18NAuthoringSupport, uiContext, componentProvider);
@@ -121,9 +133,14 @@ public class QuerySubAppTest {
         item.addItemProperty(JcrToolsConstants.RESULT_ITEM_TYPE, new ObjectProperty<>(resultItemType));
         item.addItemProperty(JcrToolsConstants.STATEMENT, new ObjectProperty<>(statement));
         item.addItemProperty(node, new ObjectProperty(node));
+    }
 
+    @Test
+    public void testQuerySubApp() throws Exception {
+        // WHEN
         querySubApp.onActionTriggered();
 
+        // THEN
         ArgumentCaptor<String> resultView = ArgumentCaptor.forClass(String.class);
         verify(view).setResult(resultView.capture());
         assertThat(resultView.getValue(), containsString(successMessage));

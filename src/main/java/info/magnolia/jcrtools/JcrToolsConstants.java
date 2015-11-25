@@ -38,6 +38,7 @@ package info.magnolia.jcrtools;
  */
 public class JcrToolsConstants {
     public static final String WORKSPACE = "workspace";
+    public static final String REPOSITORY = "repository";
     public static final String BASE_PATH = "basePath";
     public static final String FORMAT_XML = "formatXml";
     public static final String LEVEL_STRING = "levelString";
@@ -48,4 +49,6 @@ public class JcrToolsConstants {
     public static final String QUERY_LANGUAGE = "queryLanguage";
     public static final String RESULT_ITEM_TYPE = "resultItemType";
     public static final String STATEMENT = "statement";
+    public static final String IMPORT_COMMAND = "import";
+    public static final String EXPORT_COMMAND = "export";
 }

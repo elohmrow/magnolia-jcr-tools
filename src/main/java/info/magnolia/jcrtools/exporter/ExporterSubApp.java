@@ -94,21 +94,21 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
 
         try {
             final String formatXml = item.getItemProperty(JcrToolsConstants.FORMAT_XML).getValue().toString();
-            TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
+            final TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
             tempFileStreamResource.setTempFileName(tmpFileName);
             tempFileStreamResource.setTempFileExtension(compression);
             tempFileOutputStream = tempFileStreamResource.getTempFileOutputStream();
 
             Map<String, Object> params = new HashMap<>();
-            params.put("repository", workspace);
-            params.put("path", rawBasePath);
+            params.put(JcrToolsConstants.REPOSITORY, workspace);
+            params.put(JcrToolsConstants.PATH, rawBasePath);
             params.put(ExportCommand.EXPORT_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_FILE_NAME, tmpFileName);
             params.put(ExportCommand.EXPORT_FORMAT, formatXml);
             params.put(ExportCommand.EXPORT_MIME_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_OUTPUT_STREAM, tempFileOutputStream);
 
-            commandsManager.executeCommand("export", params);
+            commandsManager.executeCommand(JcrToolsConstants.EXPORT_COMMAND, params);
 
             // TODO bandersen - open() is deprecated; should instead be a {@link https://vaadin.com/api/com/vaadin/ui/Link.html}. */
             Page.getCurrent().open(tempFileStreamResource, "", false);
