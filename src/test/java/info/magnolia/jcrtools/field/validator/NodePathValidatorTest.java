@@ -33,6 +33,8 @@
  */
 package info.magnolia.jcrtools.field.validator;
 
+import static org.junit.Assert.*;
+
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.test.mock.MockContext;
@@ -41,7 +43,7 @@ import info.magnolia.ui.vaadin.integration.jcr.JcrNodeAdapter;
 
 import javax.jcr.Node;
 
-import org.junit.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,7 +55,6 @@ public class NodePathValidatorTest {
     private static final String propertyName = "propertyName";
     private static final String propertyValue = "propertyValue";
 
-    private MockSession session;
     private MockContext context;
     private Node node;
     private JcrNodeAdapter item;
@@ -61,13 +62,18 @@ public class NodePathValidatorTest {
     @Before
     public void setUp() throws Exception {
         // GIVEN
-        session = new MockSession(workspace);
+        final MockSession session = new MockSession(workspace);
         context = new MockContext();
         context.addSession(workspace, session);
         MgnlContext.setInstance(context);
 
         node = session.getRootNode().addNode(path);
         item = new JcrNodeAdapter(node);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        MgnlContext.setInstance(null);
     }
 
     @Test
@@ -78,7 +84,7 @@ public class NodePathValidatorTest {
         final NodePathValidator nodePathValidator = new NodePathValidator(item, context, "");
 
         // THEN
-        Assert.assertTrue(nodePathValidator.isValid(node.getPath()));  // should be true
-        Assert.assertFalse(nodePathValidator.isValid("/fakePath"));    // should be false
+        assertTrue(nodePathValidator.isValid(node.getPath()));
+        assertFalse(nodePathValidator.isValid("/fakePath"));
     }
 }

@@ -58,6 +58,7 @@ import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import javax.jcr.Node;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -68,49 +69,38 @@ public class DumperSubAppTest {
     private static final String workspace = "workspace";
     private static final String level = "2";
     private static final String path = "path";
+    private static final String expectedResultString = "/\n/" + path + "\n";
 
-    private FormViewReduced formView;
     private JcrToolsResultView view;
-    private CommandsManager commandsManager;
     private UiContext uiContext;
     private SimpleTranslator i18n;
-    private FieldFactoryFactory fieldFactoryFactory;
-    private DefaultI18NAuthoringSupport defaultI18NAuthoringSupport;
-    private ComponentProvider componentProvider;
-    private Location location;
-
-    private MockSession session;
-    private MockContext context;
-
-    private final ConfiguredJcrToolsSubAppDescriptor subAppDescriptor = new ConfiguredJcrToolsSubAppDescriptor();
-    private final FormDefinition formDefinition = new ConfiguredFormDefinition();
-
     private DumperSubApp dumperSubApp;
-    private SubAppContext subAppContext;
-    private FormBuilder builder;
 
     @Before
     public void setUp() throws Exception {
         // GIVEN
-        formView = mock(FormViewReduced.class);
+        final FormViewReduced formView = mock(FormViewReduced.class);
+        final CommandsManager commandsManager = mock(CommandsManager.class);
+        final FieldFactoryFactory fieldFactoryFactory = mock(FieldFactoryFactory.class);
+        final DefaultI18NAuthoringSupport defaultI18NAuthoringSupport = mock(DefaultI18NAuthoringSupport.class);
+        final ComponentProvider componentProvider = mock(ComponentProvider.class);
+        final Location location = mock(Location.class);
+
+        final MockSession session = new MockSession(workspace);
+        final MockContext context = new MockContext();
+
         view = mock(JcrToolsResultView.class);
-        commandsManager = mock(CommandsManager.class);
         uiContext = mock(UiContext.class);
         i18n = mock(SimpleTranslator.class);
-        fieldFactoryFactory = mock(FieldFactoryFactory.class);
-        defaultI18NAuthoringSupport = mock(DefaultI18NAuthoringSupport.class);
-        componentProvider = mock(ComponentProvider.class);
-        location = mock(Location.class);
-
-        session = new MockSession(workspace);
-        context = new MockContext();
 
         doReturn(true).when(formView).isValid();
 
-        builder = new FormBuilder(fieldFactoryFactory, defaultI18NAuthoringSupport, uiContext, componentProvider);
+        final FormBuilder builder = new FormBuilder(fieldFactoryFactory, defaultI18NAuthoringSupport, uiContext, componentProvider);
+        final ConfiguredJcrToolsSubAppDescriptor subAppDescriptor = new ConfiguredJcrToolsSubAppDescriptor();
+        final FormDefinition formDefinition = new ConfiguredFormDefinition();
 
         subAppDescriptor.setForm(formDefinition);
-        subAppContext = new SubAppContextImpl(subAppDescriptor, null);
+        SubAppContext subAppContext = new SubAppContextImpl(subAppDescriptor, null);
 
         context.addSession(workspace, session);
         MgnlContext.setInstance(context);
@@ -119,11 +109,16 @@ public class DumperSubAppTest {
         dumperSubApp.start(location);
 
         final Node node = session.getRootNode().addNode(path);
-
         final Item item = dumperSubApp.getItem();
+
         item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(level));
         item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>(workspace));
         item.addItemProperty(node, new ObjectProperty(node));
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        MgnlContext.setInstance(null);
     }
 
     @Test
@@ -132,7 +127,7 @@ public class DumperSubAppTest {
         dumperSubApp.onActionTriggered();
 
         // THEN
-        verify(view).setResult(org.mockito.Matchers.matches("/\n/" + path + "\n"));
+        verify(view).setResult(matches(expectedResultString));
         verify(uiContext).openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.dumper.dumpSuccessMessage"));
         verify(uiContext, never()).openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.dumper.dumpFailedMessage"));
     }
