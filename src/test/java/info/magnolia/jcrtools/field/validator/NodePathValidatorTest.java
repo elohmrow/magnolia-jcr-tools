@@ -35,7 +35,6 @@ package info.magnolia.jcrtools.field.validator;
 
 import static org.junit.Assert.*;
 
-import info.magnolia.context.MgnlContext;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.test.mock.MockContext;
 import info.magnolia.test.mock.jcr.MockSession;
@@ -43,7 +42,6 @@ import info.magnolia.ui.vaadin.integration.jcr.JcrNodeAdapter;
 
 import javax.jcr.Node;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -65,15 +63,9 @@ public class NodePathValidatorTest {
         final MockSession session = new MockSession(workspace);
         context = new MockContext();
         context.addSession(workspace, session);
-        MgnlContext.setInstance(context);
 
         node = session.getRootNode().addNode(path);
         item = new JcrNodeAdapter(node);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        MgnlContext.setInstance(null);
     }
 
     @Test

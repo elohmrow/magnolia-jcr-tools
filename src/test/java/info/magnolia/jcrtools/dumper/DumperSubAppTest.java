@@ -36,7 +36,6 @@ package info.magnolia.jcrtools.dumper;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.commands.CommandsManager;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.jcrtools.ConfiguredJcrToolsSubAppDescriptor;
 import info.magnolia.jcrtools.JcrToolsConstants;
@@ -58,7 +57,6 @@ import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
 import javax.jcr.Node;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -103,7 +101,6 @@ public class DumperSubAppTest {
         SubAppContext subAppContext = new SubAppContextImpl(subAppDescriptor, null);
 
         context.addSession(workspace, session);
-        MgnlContext.setInstance(context);
 
         dumperSubApp = new DumperSubApp(subAppContext, formView, view, builder, commandsManager, context, uiContext, i18n);
         dumperSubApp.start(location);
@@ -114,11 +111,6 @@ public class DumperSubAppTest {
         item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(level));
         item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>(workspace));
         item.addItemProperty(node, new ObjectProperty(node));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        MgnlContext.setInstance(null);
     }
 
     @Test
