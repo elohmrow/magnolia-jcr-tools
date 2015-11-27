@@ -89,7 +89,8 @@ public class JcrToolsBaseSubApp extends BaseSubApp implements JcrToolsView.Liste
         formView.showValidation(true);
     }
 
-    protected Item getItem() {
+    public Item getItem() {
         return item;
     }
+
 }

@@ -80,24 +80,24 @@ public class ImporterSubApp extends JcrToolsBaseSubApp {
             final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
             final String path = item.getItemProperty(JcrToolsConstants.PATH).getValue().toString();
             final UploadReceiver file = (UploadReceiver) item.getItemProperty(JcrToolsConstants.FILE).getValue();
-            final String uuids = item.getItemProperty(JcrToolsConstants.UUIDS).getValue().toString();
+            final String behavior = item.getItemProperty(JcrToolsConstants.BEHAVIOR).getValue().toString();
 
-            doImport(workspace, path, file, uuids);
+            doImport(workspace, path, file, behavior);
         }
     }
 
-    private void doImport(final String workspace, final String path, final UploadReceiver file, final String uuids) {
+    private void doImport(final String workspace, final String path, final UploadReceiver file, final String behavior) {
         final InputStream contentAsStream = file.getContentAsStream();
 
         Map<String, Object> params = new HashMap<>();
-        params.put(JcrToolsConstants.WORKSPACE, workspace);
+        params.put(JcrToolsConstants.REPOSITORY, workspace);
         params.put(JcrToolsConstants.PATH, path);
-        params.put(ImportCommand.IMPORT_IDENTIFIER_BEHAVIOR, uuids);
+        params.put(ImportCommand.IMPORT_IDENTIFIER_BEHAVIOR, behavior);
         params.put(ImportCommand.IMPORT_XML_STREAM, contentAsStream);
         params.put(ImportCommand.IMPORT_XML_FILE_NAME, file.getFileName());
 
         try {
-            commandsManager.executeCommand("import", params);
+            commandsManager.executeCommand(JcrToolsConstants.IMPORT_COMMAND, params);
             uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.importer.importSuccessMessage"));
         } catch (Exception e) {
             log.error("Failed to execute import command.", e);
