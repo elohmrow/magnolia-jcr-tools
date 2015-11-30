@@ -44,11 +44,15 @@
 
   <dependencies>
     <dependency>
-      <name>ui-framework</name>
+      <name>core</name>
       <version>5.4.2/*</version>
     </dependency>
     <dependency>
-      <name>core</name>
+      <name>ui-admincentral</name>
+      <version>5.4.2/*</version>
+    </dependency>
+    <dependency>
+      <name>ui-framework</name>
       <version>5.4.2/*</version>
     </dependency>
   </dependencies>
