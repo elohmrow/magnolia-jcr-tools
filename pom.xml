@@ -18,6 +18,7 @@
   <properties>
     <magnoliaVersion>5.4.2</magnoliaVersion>
     <javaVersion>1.7</javaVersion>
+    <cloverCoverageThreshold>34</cloverCoverageThreshold>
   </properties>
 
   <dependencies>
