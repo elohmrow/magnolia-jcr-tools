@@ -42,7 +42,6 @@ public class JcrToolsConstants {
     public static final String BASE_PATH = "basePath";
     public static final String FORMAT_XML = "formatXml";
     public static final String LEVEL_STRING = "levelString";
-    public static final String PATH = "path";
     public static final String COMPRESSION = "compression";
     public static final String BEHAVIOR = "behavior";
     public static final String FILE = "file";

@@ -16,7 +16,7 @@
     <sv:value>superuser</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-    <sv:value>2015-11-18T15:25:36.891+01:00</sv:value>
+    <sv:value>2015-12-02T15:25:51.718+01:00</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
     <sv:value>superuser</sv:value>
@@ -1026,7 +1026,7 @@
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
                     <sv:property sv:name="jcr:uuid" sv:type="String">
-                      <sv:value>9bca6408-85e2-4865-b49a-9ebf602b7ff9</sv:value>
+                      <sv:value>0e866d12-e53e-47dd-9ad8-0738e9d27b9e</sv:value>
                     </sv:property>
                     <sv:property sv:name="class" sv:type="String">
                       <sv:value>info.magnolia.ui.form.field.definition.TextFieldDefinition</sv:value>
@@ -1037,46 +1037,108 @@
                     <sv:property sv:name="jcr:createdBy" sv:type="String">
                       <sv:value>admin</sv:value>
                     </sv:property>
+                    <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+                      <sv:value>false</sv:value>
+                    </sv:property>
                     <sv:property sv:name="mgnl:created" sv:type="Date">
-                      <sv:value>2015-11-03T17:05:02.068+01:00</sv:value>
+                      <sv:value>2015-12-02T16:24:40.801+01:00</sv:value>
                     </sv:property>
                     <sv:property sv:name="mgnl:createdBy" sv:type="String">
                       <sv:value>superuser</sv:value>
                     </sv:property>
+                    <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+                      <sv:value>2015-12-02T16:24:40.802+01:00</sv:value>
+                    </sv:property>
+                    <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+                      <sv:value>superuser</sv:value>
+                    </sv:property>
                     <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                      <sv:value>2015-11-08T04:36:47.719+01:00</sv:value>
+                      <sv:value>2015-12-02T16:29:51.838+01:00</sv:value>
                     </sv:property>
                     <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                       <sv:value>superuser</sv:value>
+                    </sv:property>
+                    <sv:property sv:name="required" sv:type="String">
+                      <sv:value>true</sv:value>
                     </sv:property>
                     <sv:node sv:name="validators">
                       <sv:property sv:name="jcr:primaryType" sv:type="Name">
                         <sv:value>mgnl:contentNode</sv:value>
                       </sv:property>
                       <sv:property sv:name="jcr:uuid" sv:type="String">
-                        <sv:value>9d9c4393-36cd-4b00-ae05-dfb61aa15cd4</sv:value>
+                        <sv:value>89297426-9426-4d11-87b3-b06d4591b2d0</sv:value>
                       </sv:property>
                       <sv:property sv:name="jcr:createdBy" sv:type="String">
                         <sv:value>admin</sv:value>
                       </sv:property>
+                      <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+                        <sv:value>false</sv:value>
+                      </sv:property>
                       <sv:property sv:name="mgnl:created" sv:type="Date">
-                        <sv:value>2015-11-08T04:36:47.722+01:00</sv:value>
+                        <sv:value>2015-12-02T16:24:40.801+01:00</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:createdBy" sv:type="String">
                         <sv:value>superuser</sv:value>
                       </sv:property>
+                      <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+                        <sv:value>2015-12-02T16:24:40.809+01:00</sv:value>
+                      </sv:property>
+                      <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+                        <sv:value>superuser</sv:value>
+                      </sv:property>
                       <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                        <sv:value>2015-11-12T11:23:56.723+01:00</sv:value>
+                        <sv:value>2015-12-02T16:28:49.357+01:00</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                         <sv:value>superuser</sv:value>
                       </sv:property>
-                      <sv:node sv:name="basePath">
+                      <sv:node sv:name="validBasePath">
                         <sv:property sv:name="jcr:primaryType" sv:type="Name">
                           <sv:value>mgnl:contentNode</sv:value>
                         </sv:property>
                         <sv:property sv:name="jcr:uuid" sv:type="String">
-                          <sv:value>7a3a3a92-e15f-4ea5-a5bd-2c575519bad1</sv:value>
+                          <sv:value>7959a089-0499-4c55-8fa7-e53fd04d5540</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="class" sv:type="String">
+                          <sv:value>info.magnolia.ui.form.validator.definition.RegexpValidatorDefinition</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="errorMessage" sv:type="String">
+                          <sv:value>Base Path must begin with /</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:createdBy" sv:type="String">
+                          <sv:value>admin</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+                          <sv:value>false</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:created" sv:type="Date">
+                          <sv:value>2015-12-02T16:24:40.801+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:createdBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+                          <sv:value>2015-12-02T16:24:40.811+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+                          <sv:value>2015-12-04T08:38:58.764+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="pattern" sv:type="String">
+                          <sv:value>^\/.*$</sv:value>
+                        </sv:property>
+                      </sv:node>
+                      <sv:node sv:name="path">
+                        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+                          <sv:value>mgnl:contentNode</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:uuid" sv:type="String">
+                          <sv:value>b1ef82b7-8dc4-4eaf-8743-9d2b949a37ff</sv:value>
                         </sv:property>
                         <sv:property sv:name="class" sv:type="String">
                           <sv:value>info.magnolia.jcrtools.field.validator.NodePathValidatorDefinition</sv:value>
@@ -1087,14 +1149,23 @@
                         <sv:property sv:name="jcr:createdBy" sv:type="String">
                           <sv:value>admin</sv:value>
                         </sv:property>
+                        <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+                          <sv:value>false</sv:value>
+                        </sv:property>
                         <sv:property sv:name="mgnl:created" sv:type="Date">
-                          <sv:value>2015-11-08T04:36:58.108+01:00</sv:value>
+                          <sv:value>2015-12-02T16:24:40.801+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:createdBy" sv:type="String">
                           <sv:value>superuser</sv:value>
                         </sv:property>
+                        <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+                          <sv:value>2015-12-02T16:24:40.811+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
                         <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                          <sv:value>2015-11-12T11:24:11.959+01:00</sv:value>
+                          <sv:value>2015-12-02T16:28:49.357+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                           <sv:value>superuser</sv:value>
@@ -1579,12 +1650,12 @@
                       <sv:value>superuser</sv:value>
                     </sv:property>
                   </sv:node>
-                  <sv:node sv:name="path">
+                  <sv:node sv:name="basePath">
                     <sv:property sv:name="jcr:primaryType" sv:type="Name">
                       <sv:value>mgnl:contentNode</sv:value>
                     </sv:property>
                     <sv:property sv:name="jcr:uuid" sv:type="String">
-                      <sv:value>62c271d0-0dd5-4084-b7aa-cace50cfc72c</sv:value>
+                      <sv:value>9bca6408-85e2-4865-b49a-9ebf602b7ff9</sv:value>
                     </sv:property>
                     <sv:property sv:name="class" sv:type="String">
                       <sv:value>info.magnolia.ui.form.field.definition.TextFieldDefinition</sv:value>
@@ -1596,54 +1667,89 @@
                       <sv:value>admin</sv:value>
                     </sv:property>
                     <sv:property sv:name="mgnl:created" sv:type="Date">
-                      <sv:value>2015-10-29T15:17:21.553+01:00</sv:value>
+                      <sv:value>2015-11-03T17:05:02.068+01:00</sv:value>
                     </sv:property>
                     <sv:property sv:name="mgnl:createdBy" sv:type="String">
                       <sv:value>superuser</sv:value>
                     </sv:property>
                     <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                      <sv:value>2015-11-05T11:04:45.578+01:00</sv:value>
+                      <sv:value>2015-12-02T16:49:01.567+01:00</sv:value>
                     </sv:property>
                     <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                       <sv:value>superuser</sv:value>
+                    </sv:property>
+                    <sv:property sv:name="required" sv:type="String">
+                      <sv:value>true</sv:value>
                     </sv:property>
                     <sv:node sv:name="validators">
                       <sv:property sv:name="jcr:primaryType" sv:type="Name">
                         <sv:value>mgnl:contentNode</sv:value>
                       </sv:property>
                       <sv:property sv:name="jcr:uuid" sv:type="String">
-                        <sv:value>7b56e07e-e5b8-4c2d-98c5-9def390233ae</sv:value>
+                        <sv:value>9d9c4393-36cd-4b00-ae05-dfb61aa15cd4</sv:value>
                       </sv:property>
                       <sv:property sv:name="jcr:createdBy" sv:type="String">
                         <sv:value>admin</sv:value>
                       </sv:property>
-                      <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
-                        <sv:value>false</sv:value>
-                      </sv:property>
                       <sv:property sv:name="mgnl:created" sv:type="Date">
-                        <sv:value>2015-11-12T11:24:27.008+01:00</sv:value>
+                        <sv:value>2015-11-08T04:36:47.722+01:00</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:createdBy" sv:type="String">
                         <sv:value>superuser</sv:value>
                       </sv:property>
-                      <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
-                        <sv:value>2015-11-12T11:24:27.012+01:00</sv:value>
-                      </sv:property>
-                      <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
-                        <sv:value>superuser</sv:value>
-                      </sv:property>
                       <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                        <sv:value>2015-11-12T11:25:08.371+01:00</sv:value>
+                        <sv:value>2015-12-02T16:49:01.567+01:00</sv:value>
                       </sv:property>
                       <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                         <sv:value>superuser</sv:value>
                       </sv:property>
+                      <sv:node sv:name="validBasePath">
+                        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+                          <sv:value>mgnl:contentNode</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:uuid" sv:type="String">
+                          <sv:value>09fb113b-2a44-4f34-8c06-c6e3f785f3d6</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="class" sv:type="String">
+                          <sv:value>info.magnolia.ui.form.validator.definition.RegexpValidatorDefinition</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="errorMessage" sv:type="String">
+                          <sv:value>Base Path must begin with /</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="jcr:createdBy" sv:type="String">
+                          <sv:value>admin</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+                          <sv:value>false</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:created" sv:type="Date">
+                          <sv:value>2015-12-02T15:51:54.481+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:createdBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+                          <sv:value>2015-12-02T15:51:54.481+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+                          <sv:value>2015-12-04T08:39:16.521+01:00</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+                          <sv:value>superuser</sv:value>
+                        </sv:property>
+                        <sv:property sv:name="pattern" sv:type="String">
+                          <sv:value>^\/.*$</sv:value>
+                        </sv:property>
+                      </sv:node>
                       <sv:node sv:name="path">
                         <sv:property sv:name="jcr:primaryType" sv:type="Name">
                           <sv:value>mgnl:contentNode</sv:value>
                         </sv:property>
                         <sv:property sv:name="jcr:uuid" sv:type="String">
-                          <sv:value>46dddee4-947d-4d97-bce1-348cba6bebf6</sv:value>
+                          <sv:value>3193212c-834d-470c-81c7-115099cdc626</sv:value>
                         </sv:property>
                         <sv:property sv:name="class" sv:type="String">
                           <sv:value>info.magnolia.jcrtools.field.validator.NodePathValidatorDefinition</sv:value>
@@ -1658,19 +1764,19 @@
                           <sv:value>false</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:created" sv:type="Date">
-                          <sv:value>2015-11-12T11:24:27.008+01:00</sv:value>
+                          <sv:value>2015-12-02T16:23:41.856+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:createdBy" sv:type="String">
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
-                          <sv:value>2015-11-12T11:24:27.017+01:00</sv:value>
+                          <sv:value>2015-12-02T16:23:41.858+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
                           <sv:value>superuser</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                          <sv:value>2015-11-12T11:25:16.058+01:00</sv:value>
+                          <sv:value>2015-12-02T16:49:01.567+01:00</sv:value>
                         </sv:property>
                         <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                           <sv:value>superuser</sv:value>

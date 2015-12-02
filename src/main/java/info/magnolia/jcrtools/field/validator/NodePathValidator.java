@@ -39,6 +39,7 @@ import info.magnolia.jcrtools.JcrToolsConstants;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +66,11 @@ public class NodePathValidator extends AbstractStringValidator {
 
     @Override
     protected boolean isValidValue(String basePath) {
-        return nodeExists(basePath);
+        if (!StringUtils.isBlank(basePath)) {
+            return nodeExists(basePath);
+        }
+
+        return false;
     }
 
     private boolean nodeExists(final String basePath) {

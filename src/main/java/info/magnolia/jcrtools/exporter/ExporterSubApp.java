@@ -85,25 +85,27 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
 
     private void doExport(final Item item) {
         final String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
-        final String rawBasePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
+        final String basePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
         final String compression = item.getItemProperty(JcrToolsConstants.COMPRESSION).getValue().toString();
 
-        final String tmpFileName = rawBasePath.equals("/") ? (workspace + compression).replace("/", ".") : (workspace + rawBasePath + compression).replace("/", ".");
+        final String exportFileName = getExportFileName(basePath, workspace, compression);
 
         OutputStream tempFileOutputStream = null;
 
         try {
-            final String formatXml = item.getItemProperty(JcrToolsConstants.FORMAT_XML).getValue().toString();
-            final TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(tmpFileName);
-            tempFileStreamResource.setTempFileName(tmpFileName);
+            Boolean formatXml = (Boolean) item.getItemProperty(JcrToolsConstants.FORMAT_XML).getValue();
+            formatXml = formatXml == null ? false : formatXml;
+
+            final TempFileStreamResource tempFileStreamResource = new TempFileStreamResource(exportFileName);
+            tempFileStreamResource.setTempFileName(exportFileName);
             tempFileStreamResource.setTempFileExtension(compression);
             tempFileOutputStream = tempFileStreamResource.getTempFileOutputStream();
 
             Map<String, Object> params = new HashMap<>();
             params.put(JcrToolsConstants.REPOSITORY, workspace);
-            params.put(JcrToolsConstants.PATH, rawBasePath);
+            params.put(JcrToolsConstants.BASE_PATH, basePath);
             params.put(ExportCommand.EXPORT_EXTENSION, compression);
-            params.put(ExportCommand.EXPORT_FILE_NAME, tmpFileName);
+            params.put(ExportCommand.EXPORT_FILE_NAME, exportFileName);
             params.put(ExportCommand.EXPORT_FORMAT, formatXml);
             params.put(ExportCommand.EXPORT_MIME_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_OUTPUT_STREAM, tempFileOutputStream);
@@ -119,5 +121,15 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
         } finally {
             IOUtils.closeQuietly(tempFileOutputStream);
         }
+    }
+
+    private String getExportFileName(final String basePath, final String workspace, final String compression) {
+        String fileName = workspace;
+
+        if (!"/".equals(basePath)) {
+            fileName += basePath;
+        }
+
+        return (fileName + compression).replace("/", ".");
     }
 }
