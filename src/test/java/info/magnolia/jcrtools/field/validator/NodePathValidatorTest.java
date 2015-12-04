@@ -48,8 +48,9 @@ import org.junit.Test;
 import com.vaadin.data.util.ObjectProperty;
 
 public class NodePathValidatorTest {
+
     private static final String workspace = "workspace";
-    private static final String path = "path";
+    private static final String basePath = "basePath";
     private static final String propertyName = "propertyName";
     private static final String propertyValue = "propertyValue";
 
@@ -64,12 +65,12 @@ public class NodePathValidatorTest {
         context = new MockContext();
         context.addSession(workspace, session);
 
-        node = session.getRootNode().addNode(path);
+        node = session.getRootNode().addNode(basePath);
         item = new JcrNodeAdapter(node);
     }
 
     @Test
-    public void testNodePathValidator() throws Exception {
+    public void nodeWithValidPathPassesValidator() throws Exception {
         // WHEN
         item.addItemProperty(propertyName, new ObjectProperty<>(propertyValue));
         item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>(workspace));
@@ -78,5 +79,14 @@ public class NodePathValidatorTest {
         // THEN
         assertTrue(nodePathValidator.isValid(node.getPath()));
         assertFalse(nodePathValidator.isValid("/fakePath"));
+    }
+
+    @Test
+    public void nodeWithInvalidPathFailsValidator() throws Exception {
+        // WHEN
+        final NodePathValidator nodePathValidator = new NodePathValidator(item, context, "");
+
+        // THEN
+        assertFalse(nodePathValidator.isValid(null));
     }
 }
