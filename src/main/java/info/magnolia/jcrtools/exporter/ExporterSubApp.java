@@ -109,6 +109,7 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
             params.put(ExportCommand.EXPORT_FORMAT, formatXml);
             params.put(ExportCommand.EXPORT_MIME_EXTENSION, compression);
             params.put(ExportCommand.EXPORT_OUTPUT_STREAM, tempFileOutputStream);
+            params.put(ExportCommand.EXPORT_KEEP_HISTORY, false);
 
             commandsManager.executeCommand(JcrToolsConstants.EXPORT_COMMAND, params);
 
