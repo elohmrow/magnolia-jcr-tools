@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2015 Magnolia International
+ * This file Copyright (c) 2016 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,16 +33,22 @@
  */
 package info.magnolia.jcrtools.dumper;
 
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.commands.CommandsManager;
+import info.magnolia.context.MgnlContext;
 import info.magnolia.i18nsystem.SimpleTranslator;
+import info.magnolia.jcr.util.NodeTypes;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcrtools.ConfiguredJcrToolsSubAppDescriptor;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsResultView;
 import info.magnolia.objectfactory.ComponentProvider;
-import info.magnolia.test.mock.MockContext;
-import info.magnolia.test.mock.jcr.MockSession;
+import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.RepositoryTestCase;
 import info.magnolia.ui.api.app.SubAppContext;
 import info.magnolia.ui.api.context.UiContext;
 import info.magnolia.ui.api.location.Location;
@@ -55,37 +61,54 @@ import info.magnolia.ui.framework.i18n.DefaultI18NAuthoringSupport;
 import info.magnolia.ui.vaadin.form.FormViewReduced;
 import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.jcr.Node;
+import javax.jcr.Session;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.ObjectProperty;
 
-public class DumperSubAppTest {
-    private static final String workspace = "workspace";
-    private static final String level = "2";
-    private static final String path = "path";
-    private static final String expectedResultString = "/\n/" + path + "\n";
+public class DumperSubAppTest extends RepositoryTestCase {
 
+    private DumperSubApp dumperSubApp;
     private JcrToolsResultView view;
     private UiContext uiContext;
     private SimpleTranslator i18n;
-    private DumperSubApp dumperSubApp;
+    private Item item;
 
+    private ArgumentCaptor<String> actualResultText;
+
+    private Node firstNode;
+    private Node secondNode;
+
+    @Override
     @Before
     public void setUp() throws Exception {
-        // GIVEN
+        super.setUp();
+
+        final Session session = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
+
+        // Setup of node structure
+        firstNode = NodeUtil.createPath(session.getRootNode(), "dumperTest", NodeTypes.Page.NAME);
+        firstNode.setProperty("myProp", "one-value");
+        firstNode.setProperty("myMultiProp", new String[] { "valueA", "valueB", "valueC" });
+
+        secondNode = NodeUtil.createPath(firstNode, "subPage1", NodeTypes.Page.NAME);
+
+        NodeUtil.createPath(secondNode, "metaNavigation", NodeTypes.Area.NAME);
+
+        // Setup of UI components
         final FormViewReduced formView = mock(FormViewReduced.class);
         final CommandsManager commandsManager = mock(CommandsManager.class);
         final FieldFactoryFactory fieldFactoryFactory = mock(FieldFactoryFactory.class);
         final DefaultI18NAuthoringSupport defaultI18NAuthoringSupport = mock(DefaultI18NAuthoringSupport.class);
         final ComponentProvider componentProvider = mock(ComponentProvider.class);
-        final Location location = mock(Location.class);
-
-        final MockSession session = new MockSession(workspace);
-        final MockContext context = new MockContext();
 
         view = mock(JcrToolsResultView.class);
         uiContext = mock(UiContext.class);
@@ -100,27 +123,86 @@ public class DumperSubAppTest {
         subAppDescriptor.setForm(formDefinition);
         SubAppContext subAppContext = new SubAppContextImpl(subAppDescriptor, null);
 
-        context.addSession(workspace, session);
+        dumperSubApp = new DumperSubApp(subAppContext, formView, view, builder, commandsManager, MgnlContext.getInstance(), uiContext, i18n);
 
-        dumperSubApp = new DumperSubApp(subAppContext, formView, view, builder, commandsManager, context, uiContext, i18n);
-        dumperSubApp.start(location);
+        dumperSubApp.start(mock(Location.class));
 
-        final Node node = session.getRootNode().addNode(path);
-        final Item item = dumperSubApp.getItem();
+        item = dumperSubApp.getItem();
+        item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>("website"));
+        item.addItemProperty(JcrToolsConstants.BASE_PATH, new ObjectProperty<>("/dumperTest"));
 
-        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(level));
-        item.addItemProperty(JcrToolsConstants.WORKSPACE, new ObjectProperty<>(workspace));
-        item.addItemProperty(node, new ObjectProperty(node));
+        actualResultText = ArgumentCaptor.forClass(String.class);
     }
 
     @Test
-    public void testDumperSubApp() throws Exception {
+    public void dumperResultCorrectAtLevel1() throws Exception {
+        // GIVEN
+        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(1));
+
         // WHEN
         dumperSubApp.onActionTriggered();
 
         // THEN
-        verify(view).setResult(matches(expectedResultString));
+        verify(view).setResult(actualResultText.capture());
+
+        final List<String> resultingLines = getResultAsList(actualResultText.getValue());
+        assertThat(resultingLines,
+                allOf(
+                        hasItem("/dumperTest"),
+                        hasItem("/dumperTest/myProp=one-value"),
+                        hasItem("/dumperTest/myMultiProp=valueA,valueB,valueC"),
+                        hasItem("/dumperTest/jcr:uuid=" + firstNode.getIdentifier()),
+                        hasItem("/dumperTest/jcr:createdBy=admin"),
+                        hasItem("/dumperTest/jcr:mixinTypes=mix:lockable"),
+                        hasItem("/dumperTest/jcr:primaryType=mgnl:page"),
+                        hasItem("/dumperTest/subPage1[mgnl:page]")
+                )
+        );
+
+        verifyNotifications();
+    }
+
+    @Test
+    public void dumperResultCorrectAtLevel2() throws Exception {
+        // GIVEN
+        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(2));
+
+        // WHEN
+        dumperSubApp.onActionTriggered();
+
+        // THEN
+        verify(view).setResult(actualResultText.capture());
+
+        final List<String> resultingLines = getResultAsList(actualResultText.getValue());
+        assertThat(resultingLines,
+                allOf(
+                        hasItem("/dumperTest"),
+                        hasItem("/dumperTest/myProp=one-value"),
+                        hasItem("/dumperTest/myMultiProp=valueA,valueB,valueC"),
+                        hasItem("/dumperTest/jcr:uuid=" + firstNode.getIdentifier()),
+                        hasItem("/dumperTest/jcr:createdBy=admin"),
+                        hasItem("/dumperTest/jcr:mixinTypes=mix:lockable"),
+                        hasItem("/dumperTest/jcr:primaryType=mgnl:page"),
+
+                        hasItem("/dumperTest/subPage1"),
+                        hasItem("/dumperTest/subPage1/jcr:createdBy=admin"),
+                        hasItem("/dumperTest/subPage1/jcr:uuid=" + secondNode.getIdentifier()),
+                        hasItem("/dumperTest/subPage1/jcr:mixinTypes=mix:lockable"),
+                        hasItem("/dumperTest/subPage1/jcr:primaryType=mgnl:page"),
+                        hasItem("/dumperTest/subPage1/metaNavigation[mgnl:area]")
+                )
+        );
+
+        verifyNotifications();
+    }
+
+    private List<String> getResultAsList(String output) {
+        return Arrays.asList(output.split("\n"));
+    }
+
+    private void verifyNotifications() {
         verify(uiContext).openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.dumper.dumpSuccessMessage"));
         verify(uiContext, never()).openNotification(MessageStyleTypeEnum.ERROR, true, i18n.translate("jcr-tools.dumper.dumpFailedMessage"));
     }
+
 }
