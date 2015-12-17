@@ -4,6 +4,7 @@
   <name>jcr-tools</name>
   <displayName>${project.name}</displayName>
   <description>${project.description}</description>
+  <versionHandler>info.magnolia.jcrtools.setup.JcrToolsModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
 
   <components>
@@ -61,6 +62,13 @@
     <dependency>
       <name>cache-app</name>
       <version>5.4.3/*</version>
+    </dependency>
+    <!-- We need adminInterface (legacy) as optional dependency
+    in order to remove legacy apps from the app launcher config -->
+    <dependency>
+      <name>adminInterface</name>
+      <version>5.3/*</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 </module>
