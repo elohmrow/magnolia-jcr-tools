@@ -137,7 +137,7 @@ public class DumperSubAppTest extends RepositoryTestCase {
     @Test
     public void dumperResultCorrectAtLevel1() throws Exception {
         // GIVEN
-        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(1));
+        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(1L));
 
         // WHEN
         dumperSubApp.onActionTriggered();
@@ -165,7 +165,7 @@ public class DumperSubAppTest extends RepositoryTestCase {
     @Test
     public void dumperResultCorrectAtLevel2() throws Exception {
         // GIVEN
-        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(2));
+        item.addItemProperty(JcrToolsConstants.LEVEL_STRING, new ObjectProperty<>(2L));
 
         // WHEN
         dumperSubApp.onActionTriggered();
