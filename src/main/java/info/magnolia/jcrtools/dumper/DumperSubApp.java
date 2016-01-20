@@ -49,7 +49,6 @@ import info.magnolia.ui.vaadin.overlay.MessageStyleTypeEnum;
 import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
-import javax.jcr.Session;
 
 import com.vaadin.data.Item;
 
@@ -78,21 +77,21 @@ public class DumperSubApp extends JcrToolsBaseSubApp {
         super.onActionTriggered();
         if (formView.isValid()) {
             final Item item = getItem();
-            String levelString = item.getItemProperty(JcrToolsConstants.LEVEL_STRING).getValue().toString();
             String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
+            String basePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
+            String levelString = item.getItemProperty(JcrToolsConstants.LEVEL_STRING).getValue().toString();
 
-            dump(workspace, Integer.parseInt(levelString));
+            dump(workspace, basePath, Integer.parseInt(levelString));
         }
     }
 
     // get nodes at depth level
-    private void dump(final String workspace, final int level) {
+    private void dump(final String workspace, final String basePath, final int level) {
         try {
             // print out the user-specified workspace to user-specified depth
-            Session session = context.getJCRSession(workspace);
-            Node rootSession = session.getRootNode();
+            Node node = context.getJCRSession(workspace).getNode(basePath);
 
-            String nodes = DumperUtil.dump(rootSession, level);
+            String nodes = DumperUtil.dump(node, level);
             view.setResult(nodes);
             uiContext.openNotification(MessageStyleTypeEnum.INFO, true, i18n.translate("jcr-tools.dumper.dumpSuccessMessage"));
         } catch (RepositoryException re) {
