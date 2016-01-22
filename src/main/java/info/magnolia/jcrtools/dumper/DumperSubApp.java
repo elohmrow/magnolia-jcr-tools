@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2015 Magnolia International
+ * This file Copyright (c) 2016 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -77,11 +77,11 @@ public class DumperSubApp extends JcrToolsBaseSubApp {
         super.onActionTriggered();
         if (formView.isValid()) {
             final Item item = getItem();
+            int level = (int) (long) item.getItemProperty(JcrToolsConstants.LEVEL_STRING).getValue();
             String workspace = item.getItemProperty(JcrToolsConstants.WORKSPACE).getValue().toString();
             String basePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
-            String levelString = item.getItemProperty(JcrToolsConstants.LEVEL_STRING).getValue().toString();
 
-            dump(workspace, basePath, Integer.parseInt(levelString));
+            dump(workspace, basePath, level);
         }
     }
 
