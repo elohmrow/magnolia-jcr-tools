@@ -36,6 +36,7 @@ package info.magnolia.jcrtools.exporter;
 import info.magnolia.commands.CommandsManager;
 import info.magnolia.commands.impl.ExportCommand;
 import info.magnolia.i18nsystem.SimpleTranslator;
+import info.magnolia.importexport.DataTransporter;
 import info.magnolia.jcrtools.JcrToolsBaseSubApp;
 import info.magnolia.jcrtools.JcrToolsConstants;
 import info.magnolia.jcrtools.JcrToolsView;
@@ -88,7 +89,7 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
         final String basePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
         final String compression = item.getItemProperty(JcrToolsConstants.COMPRESSION).getValue().toString();
 
-        final String exportFileName = getExportFileName(basePath, workspace, compression);
+        final String exportFileName = DataTransporter.createExportPath(workspace + basePath) + compression;
 
         OutputStream tempFileOutputStream = null;
 
@@ -122,15 +123,5 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
         } finally {
             IOUtils.closeQuietly(tempFileOutputStream);
         }
-    }
-
-    private String getExportFileName(final String basePath, final String workspace, final String compression) {
-        String fileName = workspace;
-
-        if (!"/".equals(basePath)) {
-            fileName += basePath;
-        }
-
-        return (fileName + compression).replace("/", ".");
     }
 }
