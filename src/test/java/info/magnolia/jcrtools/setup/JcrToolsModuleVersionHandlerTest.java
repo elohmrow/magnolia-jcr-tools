@@ -78,6 +78,6 @@ public class JcrToolsModuleVersionHandlerTest extends ModuleVersionHandlerTestCa
         assertThat(installContext.getConfigJCRSession().getNode(APP_LAUNCHER_LAYOUT_GROUPS_PATH + "/tools/apps"), not(hasNode("export")));
         assertThat(installContext.getConfigJCRSession().getNode(APP_LAUNCHER_LAYOUT_GROUPS_PATH + "/tools/apps"), not(hasNode("import")));
         assertThat(installContext.getConfigJCRSession().getNode(APP_LAUNCHER_LAYOUT_GROUPS_PATH + "/dev/apps"), not(hasNode("jcrQueryUtils")));
-        assertThat(installContext.getConfigJCRSession().getNode(APP_LAUNCHER_LAYOUT_GROUPS_PATH + "/dev/apps"), hasNode("jcr-tools"));
+        assertThat(installContext.getConfigJCRSession().getNode(APP_LAUNCHER_LAYOUT_GROUPS_PATH + "/tools/apps"), hasNode("jcr-tools"));
     }
 }

@@ -54,8 +54,8 @@ public class JcrToolsModuleVersionHandler extends DefaultModuleVersionHandler {
     protected List<Task> getExtraInstallTasks(InstallContext installContext) {
         final List<Task> tasks = new ArrayList<>();
 
-        // Add the jcr-tools app to the 'dev' group
-        tasks.add(new RegisterAppIntoAppLauncherTask("jcr-tools", "dev"));
+        // Add the jcr-tools app to the 'tools' group
+        tasks.add(new RegisterAppIntoAppLauncherTask("jcr-tools", "tools"));
 
         // Remove links to the old versions of the apps, if they exist
         tasks.add(new NodeExistsDelegateTask("Remove old Export app link", APP_LAUNCHER_LAYOUT_GROUPS_PATH + "/tools/apps/export",
