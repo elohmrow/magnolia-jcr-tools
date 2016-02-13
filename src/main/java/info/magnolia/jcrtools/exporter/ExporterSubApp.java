@@ -89,7 +89,8 @@ public class ExporterSubApp extends JcrToolsBaseSubApp {
         final String basePath = item.getItemProperty(JcrToolsConstants.BASE_PATH).getValue().toString();
         final String compression = item.getItemProperty(JcrToolsConstants.COMPRESSION).getValue().toString();
 
-        final String exportFileName = DataTransporter.createExportPath(workspace + basePath) + compression;
+        final String path = basePath.equals("/") ? workspace : workspace + basePath;
+        final String exportFileName = DataTransporter.createExportPath(path) + compression;
 
         OutputStream tempFileOutputStream = null;
 
